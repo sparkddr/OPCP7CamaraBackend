@@ -2,6 +2,10 @@ const express = require('express');
 
 const app = express();
 
+
+
+app.use(express.json());
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -9,6 +13,8 @@ app.use((req, res, next) => {
     next();
   });
 
+//DB Connection
+require("./src/database/connection");
 
 
 app.get('/api/utilisateurs', (req, res, next) => {
