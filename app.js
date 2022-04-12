@@ -32,7 +32,17 @@ sequelize.initDb();
 
 //ROUTES
 
-/*require('./src/routes/findAllUsers')(app)*/
+require("./src/routes/findAllUsers")(app);
+require("./src/routes/findOneUser")(app);
+require("./src/routes/addNewUser")(app);
+require("./src/routes/updateUser")(app);
+
+//Gestion des erreurs 404
+app.use(({ res }) => {
+  const message =
+    "Impossible de trouver la ressource demandée ! Vous pouvez essayer une autre URL.";
+  res.status(404).json({ message });
+});
 
 /*app.get("/api/user/:id", (req, res) => {
   const id = parseInt(req.params.id);

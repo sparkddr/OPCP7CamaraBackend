@@ -8,7 +8,6 @@ const users = [
     profilpic: "fff",
   },
   {
-    id: 2,
     firstname: "Cam",
     lastname: "Cool",
     email: "c@gmail.com",
