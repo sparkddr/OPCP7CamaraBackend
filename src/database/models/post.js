@@ -11,10 +11,6 @@ const Post = sequelize.define("post",{
     message : {
         type : Sequelize.TEXT,
         allowNull : false
-    },
-    utilisateur_id : {
-        type : Sequelize.INTEGER,
-        allowNull : false
     }
 })
 

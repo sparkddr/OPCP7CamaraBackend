@@ -11,14 +11,6 @@ const Comment = sequelize.define("comment",{
     message : {
         type : Sequelize.TEXT,
         allowNull : false
-    }, 
-    utilisateur_id : {
-        type : Sequelize.INTEGER,
-        allowNull : false
-    },
-    post_id : {
-        type : Sequelize.INTEGER,
-        allowNull : false
     }
 })
 

@@ -6,14 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Camille CAMARA",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
+    "mariadb": "^3.0.0",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.18.0"
+    "prettier": "^2.6.2",
+    "sequelize": "^6.18.0",
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
+    "morgan": "^1.10.0",
     "sequelize-cli": "^6.4.1"
   }
 }
