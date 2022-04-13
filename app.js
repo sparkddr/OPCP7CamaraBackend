@@ -49,6 +49,10 @@ require("./src/routes/Comment/addNewComment")(app);
 require("./src/routes/Comment/findOneComment")(app);
 require("./src/routes/Comment/updateComment")(app);
 
+//LIKE
+require("./src/routes/Like/addNewLike")(app);
+require("./src/routes/Like/deleteLike")(app);
+
 //CONNECTION
 
 //Gestion des erreurs 404

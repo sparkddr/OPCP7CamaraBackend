@@ -2,6 +2,8 @@ const sequelize = require("./connection");
 const User = require("./models/user");
 const Post = require("./models/post");
 const Comment = require("./models/comment");
+const Like = require("./models/like");
+
 const users = require("./mock-test/mock-user.js");
 const posts = require("./mock-test/mock-post.js");
 const comments = require("./mock-test/mock-comments.js");
@@ -9,6 +11,8 @@ const comments = require("./mock-test/mock-comments.js");
 User.hasMany(Post);
 User.hasMany(Comment);
 Post.hasMany(Comment);
+User.hasMany(Like);
+Post.hasMany(Like);
 
 const initDb = () => {
   sequelize.sync({ force: true }).then((result) => {
@@ -38,7 +42,7 @@ const initDb = () => {
   });
 };
 
-module.exports = { initDb, User, Post, Comment };
+module.exports = { initDb, User, Post, Comment, Like };
 
 /*.then((user) => {
     console.log("First User created", user);
