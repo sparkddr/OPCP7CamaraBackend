@@ -1,9 +1,9 @@
-const { User } = require("../database/index");
+const { User } = require("../../database/index");
 const { ValidationError, UniqueConstraintError } = require("sequelize");
 
 module.exports = (app) => {
   app.put("/api/users/:id", (req, res) => {
-    const id = req.paramas.id;
+    const id = req.params.id;
     User.update(req.body, {
       where: { id: id },
     })

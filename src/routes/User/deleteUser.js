@@ -1,4 +1,4 @@
-const { User } = require("../database/index");
+const { User } = require("../../database/index");
 
 module.exports = (app) => {
   app.delete("/api/users/:id", (req, res) => {

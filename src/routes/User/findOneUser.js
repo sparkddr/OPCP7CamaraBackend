@@ -1,10 +1,10 @@
-const { User } = require("../database/index");
+const { User } = require("../../database/index");
 
 module.exports = (app) => {
   app.get("/api/users/:id", (req, res) => {
     User.findByPk(req.params.id)
       .then((user) => {
-        if (pokemon === null) {
+        if (user === null) {
           const message =
             "L'utilisateur demandé n'existe pas. Réessayer avec un autre identifiant";
           return res.status(404).json({ message });

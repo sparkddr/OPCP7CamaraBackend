@@ -3,6 +3,7 @@ const User = require("./models/user");
 const Post = require("./models/post");
 const Comment = require("./models/comment");
 const users = require("./mock-test/mock-user.js");
+const posts = require("./mock-test/mock-post.js");
 
 User.hasMany(Post);
 User.hasMany(Comment);
@@ -20,10 +21,16 @@ const initDb = () => {
         profilpic: user.profilpic,
       }).then((cam) => console.log(cam.toJSON()));
     });
+    posts.map((post) => {
+      Post.create({
+        message: post.message,
+        userId: post.userId,
+      }).then((cam) => console.log(cam.toJSON()));
+    });
   });
 };
 
-module.exports = { initDb, User };
+module.exports = { initDb, User, Post, Comment };
 
 /*.then((user) => {
     console.log("First User created", user);

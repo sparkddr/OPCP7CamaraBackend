@@ -1,5 +1,4 @@
-const sequelize = require("../database/connection");
-const { User } = require("../database/index");
+const { User } = require("../../database/index");
 const { ValidationError, UniqueConstraintError } = require("sequelize");
 
 module.exports = (app) => {

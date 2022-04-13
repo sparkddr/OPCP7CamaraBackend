@@ -31,11 +31,21 @@ app
 sequelize.initDb();
 
 //ROUTES
+//USER
+require("./src/routes/User/findAllUsers")(app);
+require("./src/routes/User/findOneUser")(app);
+require("./src/routes/User/addNewUser")(app);
+require("./src/routes/User/updateUser")(app);
+require("./src/routes/User/deleteUser")(app);
 
-require("./src/routes/findAllUsers")(app);
-require("./src/routes/findOneUser")(app);
-require("./src/routes/addNewUser")(app);
-require("./src/routes/updateUser")(app);
+//POST
+require("./src/routes/Post/findAllPost.js")(app);
+require("./src/routes/Post/deletePost")(app);
+require("./src/routes/Post/addNewPost")(app);
+require("./src/routes/Post/findOnePost")(app);
+require("./src/routes/Post/updatePost")(app);
+
+//CONNECTION
 
 //Gestion des erreurs 404
 app.use(({ res }) => {
