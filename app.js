@@ -3,9 +3,6 @@ const morgan = require("morgan");
 const favicon = require("serve-favicon");
 const app = express();
 
-const users = require("./src/database/mock-test/mock-user");
-const { success } = require("./src/utils/helper");
-
 const sequelize = require("./src/database/index.js");
 
 app.use((req, res, next) => {
@@ -44,6 +41,13 @@ require("./src/routes/Post/deletePost")(app);
 require("./src/routes/Post/addNewPost")(app);
 require("./src/routes/Post/findOnePost")(app);
 require("./src/routes/Post/updatePost")(app);
+
+//COMMENT
+require("./src/routes/Comment/findAllComment.js")(app);
+require("./src/routes/Comment/deleteComment")(app);
+require("./src/routes/Comment/addNewComment")(app);
+require("./src/routes/Comment/findOneComment")(app);
+require("./src/routes/Comment/updateComment")(app);
 
 //CONNECTION
 
