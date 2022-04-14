@@ -8,6 +8,7 @@ const sequelize = require("./src/database/index.js");
 //Importation routes
 const postRoutes = require("./src/routes/post");
 const commentRoutes = require("./src/routes/comment");
+const userRoutes = require("./src/routes/user");
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -32,17 +33,9 @@ app
 sequelize.initDb();
 
 //ROUTES
-//USER
-require("./src/routes/User/findAllUsers")(app);
-require("./src/routes/User/findOneUser")(app);
-require("./src/routes/User/addNewUser")(app);
-require("./src/routes/User/updateUser")(app);
-require("./src/routes/User/deleteUser")(app);
 
-//POST
+app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
-
-//COMMENT
 app.use("/api/comments", commentRoutes);
 
 //LIKE
