@@ -9,6 +9,7 @@ const sequelize = require("./src/database/index.js");
 const postRoutes = require("./src/routes/post");
 const commentRoutes = require("./src/routes/comment");
 const userRoutes = require("./src/routes/user");
+const likeRoutes = require("./src/routes/like");
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -37,10 +38,7 @@ sequelize.initDb();
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
-
-//LIKE
-require("./src/routes/Like/addNewLike")(app);
-require("./src/routes/Like/deleteLike")(app);
+app.use("/api/likes", likeRoutes);
 
 //LOG
 require("./src/routes/login")(app);
