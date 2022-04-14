@@ -3,6 +3,7 @@ const users = [
     firstname: "Camille",
     lastname: "CAMARA",
     email: "cc@gmail.com",
+    password: "1234",
     role: "dev",
     admin: true,
     profilpic: "fff",
@@ -14,6 +15,7 @@ const users = [
     role: "dev",
     admin: false,
     profilpic: "gggg",
+    password: "23456",
   },
   {
     firstname: "Joe",
@@ -22,6 +24,7 @@ const users = [
     role: "dev",
     admin: false,
     profilpic: "gggg",
+    password: "2356",
   },
   {
     firstname: "KARDE",
@@ -30,6 +33,7 @@ const users = [
     role: "dev",
     admin: false,
     profilpic: "gggg",
+    password: "ZZ3456",
   },
 ];
 

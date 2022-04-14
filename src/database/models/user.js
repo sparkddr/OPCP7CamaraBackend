@@ -33,6 +33,9 @@ const User = sequelize.define("user", {
       notNull: { msg: "Merci de renseigner  votre Email" },
     },
   },
+  password: {
+    type: Sequelize.STRING,
+  },
   role: {
     type: Sequelize.STRING,
     allowNull: false,

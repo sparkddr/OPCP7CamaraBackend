@@ -53,6 +53,8 @@ require("./src/routes/Comment/updateComment")(app);
 require("./src/routes/Like/addNewLike")(app);
 require("./src/routes/Like/deleteLike")(app);
 
+//LOG
+require("./src/routes/login")(app);
 //CONNECTION
 
 //Gestion des erreurs 404

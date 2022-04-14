@@ -1,6 +1,9 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../connection");
 
+const User = require("./user");
+const Post = require("./post");
+
 const Like = sequelize.define(
   "like",
   {
@@ -10,19 +13,17 @@ const Like = sequelize.define(
       allowNull: false,
       primaryKey: true,
     },
-    userId: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-    },
-    postId: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-    },
   },
   {
-    timesamps: true,
+    timestamps: true,
     updatedAt: false,
   }
 );
+
+User.hasMany(Like);
+Like.belongsTo(User);
+
+Post.hasMany(Like);
+Like.belongsTo(Post);
 
 module.exports = Like;

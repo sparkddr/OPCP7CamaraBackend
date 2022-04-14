@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../connection");
+const User = require("./user");
 
 const Post = sequelize.define("post", {
   id: {
@@ -16,10 +17,9 @@ const Post = sequelize.define("post", {
       notNull: { msg: "Le message est une propriété requise" },
     },
   },
-  userId: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
 });
+
+User.hasMany(Post);
+Post.belongsTo(User);
 
 module.exports = Post;

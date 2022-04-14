@@ -1,45 +1,48 @@
 const sequelize = require("./connection");
+const bcrypt = require("bcrypt");
+
 const User = require("./models/user");
 const Post = require("./models/post");
 const Comment = require("./models/comment");
 const Like = require("./models/like");
+const SignalPost = require("./models/signalPost");
+const SignalComment = require("./models/signalComment");
 
 const users = require("./mock-test/mock-user.js");
 const posts = require("./mock-test/mock-post.js");
 const comments = require("./mock-test/mock-comments.js");
 
-User.hasMany(Post);
-User.hasMany(Comment);
-Post.hasMany(Comment);
-User.hasMany(Like);
-Post.hasMany(Like);
-
 const initDb = () => {
-  sequelize.sync({ force: true }).then((result) => {
-    users.map((user) => {
-      User.create({
-        lastname: user.lastname,
-        firstname: user.firstname,
-        email: user.email,
-        role: user.role,
-        admin: user.admin,
-        profilpic: user.profilpic,
-      }).then((cam) => console.log(cam.toJSON()));
+  sequelize
+    .sync({ force: true })
+    .then((result) => {
+      users.map((user) => {
+        bcrypt.hash(user.password, 10).then((hash) => {
+          User.create({
+            lastname: user.lastname,
+            firstname: user.firstname,
+            email: user.email,
+            role: user.role,
+            admin: user.admin,
+            password: hash,
+            profilpic: user.profilpic,
+          }).then((cam) => console.log(cam.toJSON()));
+        });
+      });
+    })
+    .then(() => {
+      posts.map((post) => {
+        Post.create({
+          message: post.message,
+        }).then((old) => console.log(old.toJSON()));
+      });
+
+      comments.map((comment) => {
+        Comment.create({
+          message: comment.message,
+        }).then((yes) => console.log(yes.toJSON()));
+      });
     });
-    posts.map((post) => {
-      Post.create({
-        message: post.message,
-        userId: post.userId,
-      }).then((cam) => console.log(cam.toJSON()));
-    });
-    comments.map((comment) => {
-      Comment.create({
-        message: comment.message,
-        userId: comment.userId,
-        postId: comment.postId,
-      }).then((cam) => console.log(cam.toJSON()));
-    });
-  });
 };
 
 module.exports = { initDb, User, Post, Comment, Like };
