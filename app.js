@@ -5,7 +5,9 @@ const app = express();
 
 const sequelize = require("./src/database/index.js");
 
+//Importation routes
 const postRoutes = require("./src/routes/post");
+const commentRoutes = require("./src/routes/comment");
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -39,18 +41,9 @@ require("./src/routes/User/deleteUser")(app);
 
 //POST
 app.use("/api/posts", postRoutes);
-/*require("./src/routes/Post/findAllPost.js")(app);
-require("./src/routes/Post/deletePost")(app);
-require("./src/routes/Post/addNewPost")(app);
-require("./src/routes/Post/findOnePost")(app);
-require("./src/routes/Post/updatePost")(app);*/
 
 //COMMENT
-require("./src/routes/Comment/findAllComment.js")(app);
-require("./src/routes/Comment/deleteComment")(app);
-require("./src/routes/Comment/addNewComment")(app);
-require("./src/routes/Comment/findOneComment")(app);
-require("./src/routes/Comment/updateComment")(app);
+app.use("/api/comments", commentRoutes);
 
 //LIKE
 require("./src/routes/Like/addNewLike")(app);
