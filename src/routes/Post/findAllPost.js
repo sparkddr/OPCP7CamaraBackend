@@ -1,5 +1,6 @@
 const { Post } = require("../../database/index");
 const { Op } = require("sequelize");
+const auth = require("../../auth/auth");
 
 module.exports = (app) => {
   app.get("/api/posts", (req, res) => {

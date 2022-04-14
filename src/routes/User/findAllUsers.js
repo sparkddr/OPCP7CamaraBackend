@@ -1,8 +1,9 @@
 const { User } = require("../../database/index");
 const { Op } = require("sequelize");
+const auth = require("../../auth/auth");
 
 module.exports = (app) => {
-  app.get("/api/users", (req, res) => {
+  app.get("/api/users", auth, (req, res) => {
     if (req.query.firstname) {
       const firstname = req.query.firstname;
       if (firstname.length < 2) {
