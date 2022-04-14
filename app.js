@@ -5,6 +5,8 @@ const app = express();
 
 const sequelize = require("./src/database/index.js");
 
+const postRoutes = require("./src/routes/post");
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -36,11 +38,12 @@ require("./src/routes/User/updateUser")(app);
 require("./src/routes/User/deleteUser")(app);
 
 //POST
-require("./src/routes/Post/findAllPost.js")(app);
+app.use("/api/posts", postRoutes);
+/*require("./src/routes/Post/findAllPost.js")(app);
 require("./src/routes/Post/deletePost")(app);
 require("./src/routes/Post/addNewPost")(app);
 require("./src/routes/Post/findOnePost")(app);
-require("./src/routes/Post/updatePost")(app);
+require("./src/routes/Post/updatePost")(app);*/
 
 //COMMENT
 require("./src/routes/Comment/findAllComment.js")(app);
