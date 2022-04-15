@@ -10,6 +10,7 @@ const postRoutes = require("./src/routes/post");
 const commentRoutes = require("./src/routes/comment");
 const userRoutes = require("./src/routes/user");
 const likeRoutes = require("./src/routes/like");
+const logRoutes = require("./src/routes/log");
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -39,9 +40,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/likes", likeRoutes);
+app.use("/api", logRoutes);
 
-//LOG
-require("./src/routes/login")(app);
 //CONNECTION
 
 //Gestion des erreurs 404
