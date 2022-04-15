@@ -27,10 +27,4 @@ const SignalComment = sequelize.define(
   }
 );
 
-User.hasMany(SignalComment);
-SignalComment.belongsTo(User);
-
-Comment.hasMany(SignalComment);
-SignalComment.belongsTo(Comment);
-
 module.exports = SignalComment;

@@ -12,6 +12,16 @@ const users = require("./mock-test/mock-user.js");
 const posts = require("./mock-test/mock-post.js");
 const comments = require("./mock-test/mock-comments.js");
 
+User.hasMany(SignalPost);
+SignalPost.belongsTo(User);
+Post.hasMany(SignalPost);
+SignalPost.belongsTo(Post);
+
+User.hasMany(SignalComment);
+SignalComment.belongsTo(User);
+Comment.hasMany(SignalComment);
+SignalComment.belongsTo(Comment);
+
 const initDb = () => {
   sequelize
     .sync({ force: true })
@@ -45,7 +55,15 @@ const initDb = () => {
     });
 };
 
-module.exports = { initDb, User, Post, Comment, Like };
+module.exports = {
+  initDb,
+  User,
+  Post,
+  Comment,
+  Like,
+  SignalComment,
+  SignalPost,
+};
 
 /*.then((user) => {
     console.log("First User created", user);

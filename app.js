@@ -11,6 +11,7 @@ const commentRoutes = require("./src/routes/comment");
 const userRoutes = require("./src/routes/user");
 const likeRoutes = require("./src/routes/like");
 const logRoutes = require("./src/routes/log");
+const signalRoutes = require("./src/routes/signal");
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -41,6 +42,7 @@ app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/likes", likeRoutes);
 app.use("/api", logRoutes);
+app.use("/api", signalRoutes);
 
 //CONNECTION
 

@@ -27,10 +27,4 @@ const SignalPost = sequelize.define(
   }
 );
 
-User.hasMany(SignalPost);
-SignalPost.belongsTo(User);
-
-Post.hasMany(SignalPost);
-SignalPost.belongsTo(Post);
-
 module.exports = SignalPost;

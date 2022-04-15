@@ -1,6 +1,5 @@
 const { Post } = require("../database/index");
 const { ValidationError } = require("sequelize");
-const { Op } = require("sequelize");
 
 exports.addNewPost = (req, res) => {
   Post.create(req.body)
