@@ -42,12 +42,12 @@ const User = sequelize.define("user", {
   },
   admin: {
     type: Sequelize.BOOLEAN,
-    default: false,
+    defaultValue: false,
     allowNull: false,
   },
   profilpic: {
     type: Sequelize.STRING,
-    default: "ok",
+    defaultValue: "ok",
     allowNull: false,
   },
 });

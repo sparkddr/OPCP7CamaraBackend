@@ -1,18 +1,19 @@
 const posts = [
   {
-    message: "Oulala c'est la fête",
+    message: "Bonjour à tous et bienvenue",
     userId: 2,
   },
   {
-    message: "Oefefefete",
+    message: "Hello tout le monde comment ça va?",
     userId: 3,
   },
   {
-    message: "O cejoajeijfafafete",
+    message: "Salut regardez cette vidéo elle est incroyable",
     userId: 1,
   },
   {
-    message: "Oualzkjaoizjfoia aze",
+    message:
+      "Je vous transmets les dernières infos concernant la mise en place de la nouvelle salle. Est ce que certaines personnes seraient dispo pour venir m'aider à installer l'endroit pour la fête d'inauguration?",
     userId: 1,
   },
 ];

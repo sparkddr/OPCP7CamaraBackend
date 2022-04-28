@@ -6,6 +6,6 @@ const auth = require("../auth/auth");
 router.get("/", auth, userCtrl.findAllUsers);
 router.get("/:id", userCtrl.findOneUser);
 router.delete("/:id", userCtrl.deleteUser);
-router.put("/:id", userCtrl.updateUser);
+router.put("/:id", auth, userCtrl.updateUser);
 
 module.exports = router;

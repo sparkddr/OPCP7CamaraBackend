@@ -35,3 +35,19 @@ exports.deleteLike = (req, res) => {
       res.status(500).json({ message, data: error });
     });
 };
+
+exports.getPostLikes = (req, res) => {
+  Like.findAll({
+    where: {
+      postId: req.params.id,
+    },
+  })
+    .then((likes) => {
+      const message = "La Liste des likes a bien été récupérée.";
+      res.json({ message, data: likes });
+    })
+    .catch((error) => {
+      const message = `La liste des likes n'a pas pu être récupéree. Réessayer dans quelques instants.`;
+      res.status(500).json({ message, data: error });
+    });
+};
