@@ -18,15 +18,23 @@ exports.newComment = (req, res) => {
 };
 
 exports.findAllComment = (req, res) => {
-  Comment.findAll()
-    .then((comments) => {
-      const message = "La Liste des comments a bien été récupérée.";
+  if (req.query.postId) {
+    const postId = req.query.postId;
+    return Comment.findAll({ where: { postId: postId } }).then((comments) => {
+      const message = `Il y a ${comments.length} sur ce post `;
       res.json({ message, data: comments });
-    })
-    .catch((error) => {
-      const message = `La liste des comments n'a pas pu être récupéree. Réessayer dans quelques instants.`;
-      res.status(500).json({ message, data: error });
     });
+  } else {
+    Comment.findAll()
+      .then((comments) => {
+        const message = "La Liste des comments a bien été récupérée.";
+        res.json({ message, data: comments });
+      })
+      .catch((error) => {
+        const message = `La liste des comments n'a pas pu être récupéree. Réessayer dans quelques instants.`;
+        res.status(500).json({ message, data: error });
+      });
+  }
 };
 
 exports.findOneComment = (req, res) => {

@@ -18,7 +18,7 @@ exports.addNewPost = (req, res) => {
 };
 
 exports.findAllPost = (req, res) => {
-  Post.findAll()
+  Post.findAll({ order: [["createdAt", "DESC"]] })
     .then((posts) => {
       const message = "La Liste des posts a bien été récupérée.";
       res.json({ message, data: posts });
