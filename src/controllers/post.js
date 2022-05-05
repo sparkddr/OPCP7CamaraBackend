@@ -1,10 +1,10 @@
-const { Post } = require("../database/index");
+const { Post, Comment } = require("../database/index");
 const { ValidationError } = require("sequelize");
 
 exports.addNewPost = (req, res) => {
   Post.create(req.body)
     .then((post) => {
-      const message = `Le post ${req.body.message} a bien été créé.`;
+      const message = `Le post ${req.body.message} a bien été créé et ajouté à a liste.`;
       res.json({ message, data: post });
     })
     .catch((error) => {
@@ -18,7 +18,7 @@ exports.addNewPost = (req, res) => {
 };
 
 exports.findAllPost = (req, res) => {
-  Post.findAll({ order: [["createdAt", "DESC"]] })
+  Post.findAll({ /* order: [["createdAt", "DESC"]], */ include: Comment })
     .then((posts) => {
       const message = "La Liste des posts a bien été récupérée.";
       res.json({ message, data: posts });
