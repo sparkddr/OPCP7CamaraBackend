@@ -49,73 +49,43 @@ exports.findOneUser = (req, res) => {
 
 exports.updateUser = (req, res) => {
   const id = req.params.id;
-  req.body.password
-    ? bcrypt.hash(req.body.password, 10).then((hash) => {
-        User.update(
-          { ...req.body, password: hash },
-          {
-            where: { id: id },
-          }
-        )
-          .then(() => {
-            return User.findByPk(id).then((user) => {
-              if (user === null) {
-                const message =
-                  "L'utilisateur demandé n'existe pas . Réessayer avec un autre identifiant";
-                return res.status(404).json({ message });
-              }
-              const message = "L'utilisateur a bien été modifié";
-              res.json({ message, data: user });
-            });
-          })
-          .catch((error) => {
-            if (error instanceof ValidationError) {
-              return res
-                .status(400)
-                .json({ message: error.message, data: error });
-            }
-            if (error instanceof UniqueConstraintError) {
-              return res
-                .status(400)
-                .json({ message: error.message, data: error });
-            }
+  const userUpdate = (userData) => {
+    User.update(userData, {
+      where: { id: id },
+    })
+      .then(() => {
+        console.log(userData);
+        return User.findByPk(id).then((user) => {
+          if (user === null) {
             const message =
-              "L'utilisateur n'a pas pu être modifié, Merci de réessayer un peu plus tard";
-            res.status(500).json({ message, data: error });
-          });
-      })
-    : User.update(
-        { ...req.body },
-        {
-          where: { id: id },
-        }
-      )
-        .then(() => {
-          return User.findByPk(id).then((user) => {
-            if (user === null) {
-              const message =
-                "L'utilisateur demandé n'existe pas . Réessayer avec un autre identifiant";
-              return res.status(404).json({ message });
-            }
-            const message = "L'utilisateur a bien été modifié";
-            res.json({ message, data: user });
-          });
-        })
-        .catch((error) => {
-          if (error instanceof ValidationError) {
-            return res
-              .status(400)
-              .json({ message: error.message, data: error });
+              "L'utilisateur demandé n'existe pas . Réessayer avec un autre identifiant";
+            return res.status(404).json({ message });
           }
-          if (error instanceof UniqueConstraintError) {
-            return res
-              .status(400)
-              .json({ message: error.message, data: error });
-          }
-          const message =
-            "L'utilisateur n'a pas pu être modifié, Merci de réessayer un peu plus tard";
-          res.status(500).json({ message, data: error });
+          const message = "L'utilisateur a bien été modifié";
+          res.json({ message, data: user });
         });
+      })
+      .catch((error) => {
+        if (error instanceof ValidationError) {
+          return res.status(400).json({ message: error.message, data: error });
+        }
+        if (error instanceof UniqueConstraintError) {
+          return res.status(400).json({ message: error.message, data: error });
+        }
+        const message =
+          "L'utilisateur n'a pas pu être modifié, Merci de réessayer un peu plus tard";
+        res.status(500).json({ message, data: error });
+      });
+  };
+  if (req.body.password) {
+    bcrypt.hash(req.body.password, 10).then((hash) => {
+      const data = { ...req.body, password: hash };
+      userUpdate(data);
+    });
+  } else {
+    const data = { ...req.body };
+    userUpdate({ data });
+  }
 };
 
 exports.deleteUser = (req, res) => {
@@ -140,3 +110,38 @@ exports.deleteUser = (req, res) => {
       res.status(500).json({ message, data: error });
     });
 };
+// req.body.password
+//   ? bcrypt.hash(req.body.password, 10).then((hash) => {
+//       User.update(
+//         { ...req.body, password: hash },
+//         {
+//           where: { id: id },
+//         }
+//       )
+//         .then(() => {
+//           return User.findByPk(id).then((user) => {
+//             if (user === null) {
+//               const message =
+//                 "L'utilisateur demandé n'existe pas . Réessayer avec un autre identifiant";
+//               return res.status(404).json({ message });
+//             }
+//             const message = "L'utilisateur a bien été modifié";
+//             res.json({ message, data: user });
+//           });
+//         })
+//         .catch((error) => {
+//           if (error instanceof ValidationError) {
+//             return res
+//               .status(400)
+//               .json({ message: error.message, data: error });
+//           }
+//           if (error instanceof UniqueConstraintError) {
+//             return res
+//               .status(400)
+//               .json({ message: error.message, data: error });
+//           }
+//           const message =
+//             "L'utilisateur n'a pas pu être modifié, Merci de réessayer un peu plus tard";
+//           res.status(500).json({ message, data: error });
+//         });
+//     })
