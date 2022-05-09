@@ -5,6 +5,8 @@ const app = express();
 
 const sequelize = require("./src/database/index.js");
 
+const path = require("path");
+
 //Importation routes
 const postRoutes = require("./src/routes/post");
 const commentRoutes = require("./src/routes/comment");
@@ -37,6 +39,8 @@ sequelize.initDb();
 
 //ROUTES
 
+app.use("/images", express.static(path.join(__dirname, "images")));
+
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
@@ -52,29 +56,5 @@ app.use(({ res }) => {
     "Impossible de trouver la ressource demandée ! Vous pouvez essayer une autre URL.";
   res.status(404).json({ message });
 });
-
-/*app.get("/api/user/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  const user = users.find((user) => user.id === id);
-  const message = "Un utilisateur a été trouvé";
-  res.json(success(message, user));
-});
-app.get("/api/users", (req, res) => {
-  const message = "Voici la liste des utilisateurs";
-  res.json(success(message, users));
-});
-app.post("/api/user/:id", (req, res) => {
-  const id = req.params.id;
-});
-app.put("/api/user/:id", (req, res) => {
-  const id = req.params.id;
-});
-app.delete("/api/user/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  const userDelete = users.find((user) => user.id === id);
-  users.filter((user) => user.id !== id);
-  const message = `L'utilisateur ${userDelete.firstname} a bien été supprimé`;
-  res.json(success(message, userDelete));
-});*/
 
 module.exports = app;

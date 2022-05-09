@@ -13,9 +13,23 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, callback) => {
     const name = file.originalname.split(" ").join("_");
+    const nameTwo = name.split(".")[0];
     const extension = MIME_TYPES[file.mimetype];
-    callback(null, name + Date.now() + "." + extension);
+    callback(null, nameTwo + Date.now() + "." + extension);
   },
 });
 
-module.exports = multer({ storage: storage }).single("image");
+module.exports = multer({ storage: storage }).single("picture");
+
+// const multer = require("multer");
+
+// const upload = multer({
+//   dest: "images/save",
+// });
+
+// exports.uploadImage = upload.single("picture");
+
+// exports.upload = (req, res) => {
+//   console.log(req.file);
+//   res.status(200).json({ success: "Sucess" });
+// };

@@ -48,7 +48,12 @@ exports.findOneUser = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-  const id = req.params.id;
+  console.log("Hello");
+  const id = JSON.parse(req.params.id);
+  console.log("params");
+
+  console.log("yoooo");
+
   const userUpdate = (userData) => {
     User.update(userData, {
       where: { id: id },
@@ -77,14 +82,35 @@ exports.updateUser = (req, res) => {
         res.status(500).json({ message, data: error });
       });
   };
-  if (req.body.password) {
-    bcrypt.hash(req.body.password, 10).then((hash) => {
-      const data = { ...req.body, password: hash };
+  if (req.file) {
+    console.log("Le fichier file a été détécté");
+    const userData = JSON.parse(req.body.user);
+    if (userData.password) {
+      bcrypt.hash(userData.password, 10).then((hash) => {
+        const data = { ...req.body, password: hash };
+        userUpdate(data);
+      });
+    } else {
+      const data = {
+        ...JSON.parse(req.body.user),
+        profilpic: `${req.protocol}://${req.get("host")}/images/save/${
+          req.file.filename
+        }`,
+      };
       userUpdate(data);
-    });
+    }
   } else {
-    const data = { ...req.body };
-    userUpdate({ data });
+    console.log("Le fichier file n'a  pas été détécté");
+    const userData = JSON.parse(req.body.user);
+    if (userData.password) {
+      console.log(userData);
+      bcrypt.hash(userData.password, 10).then((hash) => {
+        const data = { ...userData, password: hash };
+        userUpdate(data);
+      });
+    } else {
+      userUpdate(userData);
+    }
   }
 };
 
@@ -110,38 +136,3 @@ exports.deleteUser = (req, res) => {
       res.status(500).json({ message, data: error });
     });
 };
-// req.body.password
-//   ? bcrypt.hash(req.body.password, 10).then((hash) => {
-//       User.update(
-//         { ...req.body, password: hash },
-//         {
-//           where: { id: id },
-//         }
-//       )
-//         .then(() => {
-//           return User.findByPk(id).then((user) => {
-//             if (user === null) {
-//               const message =
-//                 "L'utilisateur demandé n'existe pas . Réessayer avec un autre identifiant";
-//               return res.status(404).json({ message });
-//             }
-//             const message = "L'utilisateur a bien été modifié";
-//             res.json({ message, data: user });
-//           });
-//         })
-//         .catch((error) => {
-//           if (error instanceof ValidationError) {
-//             return res
-//               .status(400)
-//               .json({ message: error.message, data: error });
-//           }
-//           if (error instanceof UniqueConstraintError) {
-//             return res
-//               .status(400)
-//               .json({ message: error.message, data: error });
-//           }
-//           const message =
-//             "L'utilisateur n'a pas pu être modifié, Merci de réessayer un peu plus tard";
-//           res.status(500).json({ message, data: error });
-//         });
-//     })
