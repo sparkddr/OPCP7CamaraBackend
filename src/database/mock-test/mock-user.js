@@ -6,7 +6,7 @@ const users = [
     password: "1234",
     role: "dev",
     admin: true,
-    profilpic: "fff",
+    profilpic: "http://localhost:8000/images/init/CaptuCam.png",
   },
   {
     firstname: "Cam",
@@ -14,7 +14,8 @@ const users = [
     email: "c@gmail.com",
     role: "dev",
     admin: false,
-    profilpic: "gggg",
+    profilpic:
+      "http://localhost:8000/images/init/avatar-2172a57fb3e0c04fb9caccb7ee79e810.jpg",
     password: "23456",
   },
   {
@@ -23,7 +24,8 @@ const users = [
     email: "JC@gmail.com",
     role: "dev",
     admin: false,
-    profilpic: "gggg",
+    profilpic:
+      "http://localhost:8000/images/init/avatar-ef101723885c846e757cc666923f5b58.jpg",
     password: "2356",
   },
   {
@@ -32,7 +34,8 @@ const users = [
     email: "kc@gmail.com",
     role: "dev",
     admin: false,
-    profilpic: "gggg",
+    profilpic:
+      "http://localhost:8000/images/init/avatar-3dc2006986b01f5510c1963fe879e430.jpg",
     password: "ZZ3456",
   },
 ];

@@ -2,19 +2,37 @@ const { Post, Comment } = require("../database/index");
 const { ValidationError } = require("sequelize");
 
 exports.addNewPost = (req, res) => {
-  Post.create(req.body)
-    .then((post) => {
-      const message = `Le post ${req.body.message} a bien été créé et ajouté à a liste.`;
-      res.json({ message, data: post });
-    })
-    .catch((error) => {
-      if (error instanceof ValidationError) {
-        return res.status(400).json({ message: error.message, data: error });
-      }
-      const message =
-        "Le post n'a pas pu être créé, Merci de réessayer un peu plus tard";
-      res.status(500).json({ message, data: error });
-    });
+  const createPost = (dataPost) => {
+    Post.create(dataPost)
+      .then((post) => {
+        const message = `Le post ${dataPost.message} a bien été créé et ajouté à a liste.`;
+        res.json({ message, data: post });
+      })
+      .catch((error) => {
+        if (error instanceof ValidationError) {
+          return res.status(400).json({ message: error.message, data: error });
+        }
+        const message =
+          "Le post n'a pas pu être créé, Merci de réessayer un peu plus tard";
+        res.status(500).json({ message, data: error });
+      });
+  };
+  if (req.file) {
+    console.log("Fichier file");
+    const data = {
+      ...JSON.parse(req.body.post),
+      pictureurl: `${req.protocol}://${req.get("host")}/images/save/${
+        req.file.filename
+      }`,
+    };
+    console.log(data);
+    createPost(data);
+  } else {
+    console.log("Pas de fichier file");
+    const postData = JSON.parse(req.body.post);
+    console.log(postData);
+    createPost(postData);
+  }
 };
 
 exports.findAllPost = (req, res) => {

@@ -50,10 +50,6 @@ exports.findOneUser = (req, res) => {
 exports.updateUser = (req, res) => {
   console.log("Hello");
   const id = JSON.parse(req.params.id);
-  console.log("params");
-
-  console.log("yoooo");
-
   const userUpdate = (userData) => {
     User.update(userData, {
       where: { id: id },
@@ -83,7 +79,6 @@ exports.updateUser = (req, res) => {
       });
   };
   if (req.file) {
-    console.log("Le fichier file a été détécté");
     const userData = JSON.parse(req.body.user);
     if (userData.password) {
       bcrypt.hash(userData.password, 10).then((hash) => {
@@ -100,7 +95,6 @@ exports.updateUser = (req, res) => {
       userUpdate(data);
     }
   } else {
-    console.log("Le fichier file n'a  pas été détécté");
     const userData = JSON.parse(req.body.user);
     if (userData.password) {
       console.log(userData);

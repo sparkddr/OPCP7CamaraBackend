@@ -17,6 +17,10 @@ const Post = sequelize.define("post", {
       notNull: { msg: "Le message est une propriété requise" },
     },
   },
+  pictureurl: {
+    type: Sequelize.TEXT,
+    allowNull: true,
+  },
 });
 
 User.hasMany(Post);
