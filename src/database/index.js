@@ -11,8 +11,9 @@ const SignalComment = require("./models/signalComment");
 const users = require("./mock-test/mock-user.js");
 const posts = require("./mock-test/mock-post.js");
 const comments = require("./mock-test/mock-comments.js");
+const signalPost = require("./mock-test/mock-signalPost.js");
 
-User.hasMany(SignalPost);
+User.hasMany(SignalPost, { onDelete: "NO ACTION", onUpdate: "CASCADE" });
 SignalPost.belongsTo(User);
 Post.hasMany(SignalPost);
 SignalPost.belongsTo(Post);
@@ -25,36 +26,118 @@ SignalComment.belongsTo(Comment);
 const initDb = () => {
   sequelize
     .sync({ force: true })
-    .then((result) => {
+    .then(() => {
       users.map((user) => {
-        bcrypt.hash(user.password, 10).then((hash) => {
-          User.create({
-            lastname: user.lastname,
-            firstname: user.firstname,
-            email: user.email,
-            role: user.role,
-            admin: user.admin,
-            password: hash,
-            profilpic: user.profilpic,
-          }).then((cam) => console.log(cam.toJSON()));
+        User.create({
+          lastname: user.lastname,
+          firstname: user.firstname,
+          email: user.email,
+          role: user.role,
+          admin: user.admin,
+          password: user.password,
+          profilpic: user.profilpic,
         });
       });
     })
-    .then(() => {
+    .then((res) => {
       posts.map((post) => {
         Post.create({
           message: post.message,
+          userId: post.userId,
         }).then((old) => console.log(old.toJSON()));
       });
-
       comments.map((comment) => {
         Comment.create({
           message: comment.message,
+          userId: comment.userId,
+          postId: comment.postId,
         }).then((yes) => console.log(yes.toJSON()));
       });
     });
 };
 
+// signalPost.map((signal) => {
+//   SignalPost.create({
+//     message: signal.message,
+//     userId: signal.userId,
+//     postId: signal.postId,
+//   }).then((ok) => console.log(ok.toJSON()));
+// });
+
+// const initDb = () => {
+//   sequelize
+//     .sync({ force: true })
+//     .then((result) => {
+//       async function maptables() {
+//         let user = users.map((user) => {
+//           bcrypt.hash(user.password, 10).then((hash) => {
+//             User.create({
+//               lastname: user.lastname,
+//               firstname: user.firstname,
+//               email: user.email,
+//               role: user.role,
+//               admin: user.admin,
+//               password: hash,
+//               profilpic: user.profilpic,
+//             }).then((cam) => console.log(cam.toJSON()));
+//           });
+//         });
+//         let follow = await user;
+//       }
+//       maptables();
+//     })
+//     .then(() => {
+// posts.map((post) => {
+//   Post.create({
+//     message: post.message,
+//     userId: post.userId,
+//   }).then((old) => console.log(old.toJSON()));
+//       });
+//     });
+// };
+
+// users.map((user) => {
+//   bcrypt.hash(user.password, 10).then((hash) => {
+//     User.create({
+//       lastname: user.lastname,
+//       firstname: user.firstname,
+//       email: user.email,
+//       role: user.role,
+//       admin: user.admin,
+//       password: hash,
+//       profilpic: user.profilpic,
+//     })
+//       .then((cam) => console.log(cam.toJSON()))
+//       .then(() => {
+// posts.map((post) => {
+//   Post.create({
+//     message: post.message,
+//     userId: post.userId,
+//   }).then((old) => console.log(old.toJSON()));
+//         });
+
+// comments.map((comment) => {
+//   Comment.create({
+//     message: comment.message,
+//     userId: comment.userId,
+//     postId: comment.postId,
+//   }).then((yes) => console.log(yes.toJSON()));
+// });
+
+// signalPost.map((signal) => {
+//   SignalPost.create({
+//     message: signal.message,
+//     userId: signal.userId,
+//     postId: signal.postId,
+//   }).then((ok) => console.log(ok.toJSON()));
+// });
+//       });
+//   });
+// });
+
+// module.exports = {
+//   initDb,
+// };
 module.exports = {
   initDb,
   User,

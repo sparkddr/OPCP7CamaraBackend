@@ -12,12 +12,12 @@ const comments = [
   {
     message: "OMG",
     userId: 1,
-    postId: 1,
+    postId: 4,
   },
   {
     message: "WESH",
     userId: 1,
-    postId: 1,
+    postId: 4,
   },
 ];
 

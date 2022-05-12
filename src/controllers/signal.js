@@ -1,4 +1,4 @@
-const { SignalComment, SignalPost, Post } = require("../database/index");
+const { SignalComment, SignalPost, Post, User } = require("../database/index");
 const { ValidationError } = require("sequelize");
 
 exports.addNewSignalComment = (req, res) => {
@@ -33,7 +33,7 @@ exports.addNewSignalPost = (req, res) => {
 };
 
 exports.findAllSignalComments = (req, res) => {
-  SignalComment.findAll()
+  SignalComment.findAll({ include: User })
     .then((posts) => {
       const message =
         "La Liste des signalements de commentaires a bien été récupérée.";
@@ -46,8 +46,9 @@ exports.findAllSignalComments = (req, res) => {
 };
 
 exports.findAllSignalPosts = (req, res) => {
-  SignalPost.findAll()
+  SignalPost.findAll({ include: [User, Post] })
     .then((posts) => {
+      console.log(posts);
       const message =
         "La Liste des signalements de posts a bien été récupérée.";
       res.json({ message, data: posts });

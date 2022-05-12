@@ -36,6 +36,7 @@ app
 //DB Connection
 
 sequelize.initDb();
+// sequelize.initDbtwo();
 
 //ROUTES
 
