@@ -23,7 +23,7 @@ const Post = sequelize.define("post", {
   },
 });
 
-User.hasMany(Post);
+User.hasMany(Post, { onDelete: "CASCADE", onUpdate: "CASCADE" });
 Post.belongsTo(User);
 
 module.exports = Post;

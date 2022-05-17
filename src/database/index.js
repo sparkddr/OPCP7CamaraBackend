@@ -15,12 +15,12 @@ const signalPost = require("./mock-test/mock-signalPost.js");
 
 User.hasMany(SignalPost, { onDelete: "NO ACTION", onUpdate: "CASCADE" });
 SignalPost.belongsTo(User);
-Post.hasMany(SignalPost);
+Post.hasMany(SignalPost, { onDelete: "CASCADE" });
 SignalPost.belongsTo(Post);
 
-User.hasMany(SignalComment);
+User.hasMany(SignalComment, { onDelete: "NO ACTION", onUpdate: "CASCADE" });
 SignalComment.belongsTo(User);
-Comment.hasMany(SignalComment);
+Comment.hasMany(SignalComment, { onDelete: "CASCADE" });
 SignalComment.belongsTo(Comment);
 
 const initDb = () => {
@@ -42,6 +42,7 @@ const initDb = () => {
     .then((res) => {
       posts.map((post) => {
         Post.create({
+          id: post.id,
           message: post.message,
           userId: post.userId,
         }).then((old) => console.log(old.toJSON()));

@@ -16,7 +16,7 @@ const users = [
     admin: false,
     profilpic:
       "http://localhost:8000/images/init/avatar-2172a57fb3e0c04fb9caccb7ee79e810.jpg",
-    password: "PNHKLnroz1Ezm3aENmOtYONpbsQgF2g4F1oiVqYAeg2aoaR.s",
+    password: "$2b$10$fxHmwrDSVH1AXos9zK7jRO0VfMjvZ87vhDK1H5UPlCSS6fXxENTo2",
   },
   {
     firstname: "Joe",

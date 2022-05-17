@@ -121,7 +121,7 @@ exports.deleteUser = (req, res) => {
         where: { id: user.id },
       }).then(() => {
         const message = `l'utilisateur n° ${userDeleted.id} a bien été supprimé.`;
-        res.json({ message, data: pokemonDeleted });
+        res.json({ message, data: userDeleted });
       });
     })
     .catch((error) => {

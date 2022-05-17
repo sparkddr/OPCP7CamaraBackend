@@ -21,10 +21,10 @@ const Comment = sequelize.define("comment", {
   },
 });
 
-User.hasMany(Comment);
+User.hasMany(Comment, { onDelete: "CASCADE", onUpdate: "CASCADE" });
 Comment.belongsTo(User);
 
-Post.hasMany(Comment);
+Post.hasMany(Comment, { onDelete: "CASCADE", onUpdate: "CASCADE" });
 Comment.belongsTo(Post);
 
 module.exports = Comment;
