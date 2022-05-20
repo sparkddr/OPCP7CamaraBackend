@@ -1,4 +1,4 @@
-const { Post, Comment } = require("../database/index");
+const { Post, Comment, User } = require("../database/index");
 const { ValidationError } = require("sequelize");
 
 exports.addNewPost = (req, res) => {
@@ -101,11 +101,19 @@ exports.deletePost = (req, res) => {
         return res.status(404).json({ message });
       }
       const postDeleted = post;
-      return Post.destroy({
-        where: { id: post.id },
-      }).then(() => {
-        const message = `le post n° ${postDeleted.id} a bien été supprimé.`;
-        res.json({ message, data: postDeleted });
+      User.findByPk(req.auth.userId).then((user) => {
+        if (user.admin || post.userId === user.id) {
+          return Post.destroy({
+            where: { id: post.id },
+          }).then(() => {
+            const message = `le post n° ${postDeleted.id} a bien été supprimé.`;
+            res.json({ message, data: postDeleted });
+          });
+        } else {
+          return res
+            .status(401)
+            .json({ error: new Error("Requète non autorisée ! ") });
+        }
       });
     })
     .catch((error) => {
