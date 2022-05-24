@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const favicon = require("serve-favicon");
+const helmet = require("helmet");
 const app = express();
 
 const sequelize = require("./src/database/index.js");
@@ -14,6 +15,8 @@ const userRoutes = require("./src/routes/user");
 const likeRoutes = require("./src/routes/like");
 const logRoutes = require("./src/routes/log");
 const signalRoutes = require("./src/routes/signal");
+
+app.use(helmet());
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
