@@ -1,12 +1,15 @@
 const app = require("./app");
-const port = 8000;
+const dotenv = require("dotenv");
+dotenv.config();
+
+const port = process.env.PORT;
 
 app.get("/", (req, res) => {
   res.send("Hello Wllld!");
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Listening on port ${port}`);
 });
 
 /*app.set('port', process.env.PORT || 3000);

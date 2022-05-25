@@ -1,8 +1,11 @@
 const bcrypt = require("bcrypt");
 const { User } = require("../database");
 const jwt = require("jsonwebtoken");
-const privateKey = require("../auth/private_key");
 const { ValidationError, UniqueConstraintError } = require("sequelize");
+const dotenv = require("dotenv");
+dotenv.config();
+
+const privateKey = process.env.PRIVATEKEY;
 
 exports.login = (req, res) => {
   User.findOne({ where: { email: req.body.email } })

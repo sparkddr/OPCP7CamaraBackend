@@ -1,5 +1,8 @@
 const jwt = require("jsonwebtoken");
-const privateKey = require("../auth/private_key");
+const dotenv = require("dotenv");
+dotenv.config();
+
+const privateKey = process.env.PRIVATEKEY;
 
 module.exports = (req, res, next) => {
   const authorizationHeader = req.headers.authorization;

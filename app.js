@@ -1,12 +1,12 @@
 const express = require("express");
 const morgan = require("morgan");
 const favicon = require("serve-favicon");
+const cors = require("cors");
 const helmet = require("helmet");
-const app = express();
-
+const path = require("path");
 const sequelize = require("./src/database/index.js");
 
-const path = require("path");
+const app = express();
 
 //Importation routes
 const postRoutes = require("./src/routes/post");
@@ -16,20 +16,7 @@ const likeRoutes = require("./src/routes/like");
 const logRoutes = require("./src/routes/log");
 const signalRoutes = require("./src/routes/signal");
 
-app.use(helmet());
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-  );
-  next();
-});
+app.use(cors());
 
 app
   .use(favicon(__dirname + "/src/utils/favicon.ico"))
@@ -40,6 +27,26 @@ app
 
 sequelize.initDb();
 // sequelize.initDbtwo();
+
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+//   );
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+//   );
+//   res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+//   next();
+// });
+
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+);
 
 //ROUTES
 
