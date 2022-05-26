@@ -4,6 +4,7 @@ const favicon = require("serve-favicon");
 const cors = require("cors");
 const helmet = require("helmet");
 const path = require("path");
+const rateLimit = require("express-rate-limit");
 const sequelize = require("./src/database/index.js");
 
 const app = express();
@@ -15,6 +16,13 @@ const userRoutes = require("./src/routes/user");
 const likeRoutes = require("./src/routes/like");
 const logRoutes = require("./src/routes/log");
 const signalRoutes = require("./src/routes/signal");
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 app.use(cors());
 
@@ -56,7 +64,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/likes", likeRoutes);
-app.use("/api", logRoutes);
+app.use("/api", apiLimiter, logRoutes);
 app.use("/api", signalRoutes);
 
 //CONNECTION
