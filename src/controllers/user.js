@@ -1,4 +1,6 @@
-const { User } = require("../database/index");
+const db = require("../../models/index");
+const User = db.User;
+
 const { Op } = require("sequelize");
 const { ValidationError, UniqueConstraintError } = require("sequelize");
 const bcrypt = require("bcrypt");

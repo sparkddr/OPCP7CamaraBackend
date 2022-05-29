@@ -47,8 +47,6 @@ const User = sequelize.define("user", {
   },
   profilpic: {
     type: Sequelize.STRING,
-    defaultValue: "http://localhost:8000/images/init/user_icon_color.png",
-    allowNull: false,
   },
 });
 

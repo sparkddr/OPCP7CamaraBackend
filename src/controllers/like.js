@@ -1,4 +1,5 @@
-const { Like } = require("../database/index");
+const db = require("../../models/index");
+const Like = db.Like;
 
 exports.addNewLike = (req, res) => {
   Like.create(req.body)

@@ -1,10 +1,8 @@
-const {
-  SignalComment,
-  SignalPost,
-  Post,
-  User,
-  Comment,
-} = require("../database/index");
+const db = require("../../models/index");
+const SignalComment = db.SignalComment;
+const SignalPost = db.SignalPost;
+const User = db.User;
+const Post = db.Post;
 const { ValidationError } = require("sequelize");
 
 exports.addNewSignalComment = (req, res) => {
@@ -52,7 +50,12 @@ exports.findAllSignalComments = (req, res) => {
 };
 
 exports.findAllSignalPosts = (req, res) => {
-  SignalPost.findAll({ include: [User, Post] })
+  SignalPost.findAll({
+    include: [
+      { model: User, as: "user" },
+      { model: Post, as: "post" },
+    ],
+  })
     .then((posts) => {
       console.log(posts);
       const message =

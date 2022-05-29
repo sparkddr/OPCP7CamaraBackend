@@ -1,4 +1,5 @@
-const { Comment } = require("../database/index");
+const db = require("../../models/index");
+const Comment = db.Comment;
 const { ValidationError } = require("sequelize");
 
 exports.newComment = (req, res) => {

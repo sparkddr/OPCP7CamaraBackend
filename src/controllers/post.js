@@ -1,4 +1,7 @@
-const { Post, Comment, User } = require("../database/index");
+const db = require("../../models/index");
+const Post = db.Post;
+const Comment = db.Comment;
+const User = db.User;
 const { ValidationError } = require("sequelize");
 
 exports.addNewPost = (req, res) => {

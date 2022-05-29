@@ -18,7 +18,18 @@ Créer un fichier .env à la racine du dossier backend en ajoutant vos informati
   DB_DATABASE = nom_database
 ```
 
-Créer la base de donnée
+Créer la base de donnée (Vous devez au préalable avoir installé MySql sur votre ordinateur)
+
+```bash
+npx sequelize-cli db:create
+```
+
+Initialiser la base de donnée :
+
+```bash
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
+```
 
 ## Initialisation du serveur et connexion à la base de donnée
 

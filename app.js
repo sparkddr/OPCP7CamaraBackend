@@ -5,7 +5,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const path = require("path");
 const rateLimit = require("express-rate-limit");
-const sequelize = require("./src/database/index.js");
+const sequelize = require("./src/database/connection.js");
 
 const app = express();
 

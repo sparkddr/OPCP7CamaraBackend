@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
-const { User } = require("../database");
+// const { User } = require("../database");
+const db = require("../../models/index");
+const User = db.User;
 const jwt = require("jsonwebtoken");
 const { ValidationError, UniqueConstraintError } = require("sequelize");
 const dotenv = require("dotenv");
