@@ -24,38 +24,38 @@ Comment.hasMany(SignalComment, { onDelete: "CASCADE" });
 SignalComment.belongsTo(Comment);
 
 const initDb = () => {
-  sequelize
-    .sync({ force: true })
-    .then(() => {
-      users.map((user) => {
-        User.create({
-          lastname: user.lastname,
-          firstname: user.firstname,
-          email: user.email,
-          role: user.role,
-          admin: user.admin,
-          password: user.password,
-          profilpic: user.profilpic,
-        });
-      });
-    })
-    .then((res) => {
-      posts.map((post) => {
-        Post.create({
-          id: post.id,
-          message: post.message,
-          userId: post.userId,
-        }).then((old) => console.log(old.toJSON()));
-      });
-      comments.map((comment) => {
-        Comment.create({
-          message: comment.message,
-          userId: comment.userId,
-          postId: comment.postId,
-        }).then((yes) => console.log(yes.toJSON()));
-      });
-    });
+  sequelize.sync();
 };
+//     .then(() => {
+//       users.map((user) => {
+//         User.create({
+//           lastname: user.lastname,
+//           firstname: user.firstname,
+//           email: user.email,
+//           role: user.role,
+//           admin: user.admin,
+//           password: user.password,
+//           profilpic: user.profilpic,
+//         });
+//       });
+//     })
+//     .then((res) => {
+//       posts.map((post) => {
+//         Post.create({
+//           id: post.id,
+//           message: post.message,
+//           userId: post.userId,
+//         }).then((old) => console.log(old.toJSON()));
+//       });
+//       comments.map((comment) => {
+//         Comment.create({
+//           message: comment.message,
+//           userId: comment.userId,
+//           postId: comment.postId,
+//         }).then((yes) => console.log(yes.toJSON()));
+//       });
+//     });
+// };
 
 // signalPost.map((signal) => {
 //   SignalPost.create({
