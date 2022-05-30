@@ -34,6 +34,15 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          id: 5,
+          message:
+            "Hello aujourd'hui c'est l'anniversaire de Magg, j'ai emmené un gateau pour fêter ça ! On se retrouve à 17H? ",
+          userId: 4,
+          pictureurl: "http://localhost:8000/images/init/gif11653897627061.gif",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

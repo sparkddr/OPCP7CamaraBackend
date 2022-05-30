@@ -13,12 +13,13 @@ Créer un fichier .env à la racine du dossier backend en ajoutant vos informati
 ```bash
   PORT=8000 // Par défaut utiliser le port 8000 svp
   PRIVATEKEY= "Votre clé Privée"
-  DB_USERNAME = root
-  DB_PASSWORD = password
-  DB_DATABASE = nom_database
+  DB_USERNAME = "root"
+  DB_PASSWORD = "password"
+  DB_DATABASE = "nom_database"
 ```
 
-Créer la base de donnée (Vous devez au préalable avoir installé MySql sur votre ordinateur)
+Créer la base de donnée (Vous devez au préalable avoir installé MySql sur votre ordinateur) :
+Solution 1 :
 
 ```bash
 npx sequelize-cli db:create
@@ -31,6 +32,9 @@ npx sequelize-cli db:migrate
 npx sequelize-cli db:seed:all
 ```
 
+Solution 2 :
+Importer la bdd groupomania.sql fournie à la racine du projet.
+
 ## Initialisation du serveur et connexion à la base de donnée
 
 ```bash
@@ -38,3 +42,5 @@ npx sequelize-cli db:seed:all
 ```
 
 Bonne visite.
+Log admin : cc@gmail.com
+mdp : 1234

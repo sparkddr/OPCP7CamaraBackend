@@ -5,7 +5,6 @@ const cors = require("cors");
 const helmet = require("helmet");
 const path = require("path");
 const rateLimit = require("express-rate-limit");
-const sequelize = require("./src/database/connection.js");
 
 const app = express();
 
@@ -16,6 +15,7 @@ const userRoutes = require("./src/routes/user");
 const likeRoutes = require("./src/routes/like");
 const logRoutes = require("./src/routes/log");
 const signalRoutes = require("./src/routes/signal");
+const db = require("./models/index");
 
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -32,23 +32,10 @@ app
   .use(express.json());
 
 //DB Connection
-
-sequelize.initDb();
-// sequelize.initDbtwo();
-
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
-//   );
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-//   );
-//   res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
-//   next();
-// });
+db.sequelize
+  .authenticate()
+  .then(() => console.log("Connection has been established successfully."))
+  .catch((err) => console.error("Unable to connect to the database:", error));
 
 app.use(
   helmet({
