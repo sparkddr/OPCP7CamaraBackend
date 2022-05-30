@@ -13,9 +13,9 @@ Créer un fichier .env à la racine du dossier backend en ajoutant vos informati
 ```bash
   PORT=8000 // Par défaut utiliser le port 8000 svp
   PRIVATEKEY= "Votre clé Privée"
-  DB_USERNAME = root
-  DB_PASSWORD = password
-  DB_DATABASE = nom_database
+  DB_USERNAME = "root"
+  DB_PASSWORD = "password"
+  DB_DATABASE = "nom_database"
 ```
 
 Créer la base de donnée (Vous devez au préalable avoir installé MySql sur votre ordinateur)
