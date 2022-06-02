@@ -39,6 +39,14 @@ exports.addNewPost = (req, res) => {
 };
 
 exports.findAllPost = (req, res) => {
+  if (req.query.userid) {
+    const userId = req.query.userid;
+    return Post.findAll({ where: { userId: userId } }).then((posts) => {
+      const message =
+        "La Liste des posts de l'utilisateur  a bien été récupérée.";
+      res.json({ message, data: posts });
+    });
+  }
   Post.findAll({ /* order: [["createdAt", "DESC"]], */ include: Comment })
     .then((posts) => {
       const message = "La Liste des posts a bien été récupérée.";

@@ -1,4 +1,6 @@
 const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
 
 const MIME_TYPES = {
   "image/jpg": "jpg",
@@ -6,6 +8,17 @@ const MIME_TYPES = {
   "image/png": "png",
   "image/gif": "gif",
 };
+
+fs.mkdir(
+  path.join(__dirname, "../../images/save"),
+  { recursive: true },
+  (err) => {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("Directory created successfully!");
+  }
+);
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -20,16 +33,3 @@ const storage = multer.diskStorage({
 });
 
 module.exports = multer({ storage: storage }).single("picture");
-
-// const multer = require("multer");
-
-// const upload = multer({
-//   dest: "images/save",
-// });
-
-// exports.uploadImage = upload.single("picture");
-
-// exports.upload = (req, res) => {
-//   console.log(req.file);
-//   res.status(200).json({ success: "Sucess" });
-// };
