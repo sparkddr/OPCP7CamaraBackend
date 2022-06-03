@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const signalCtrl = require("../controllers/signal");
-const auth = require("../auth/auth");
+const auth = require("../middleware/auth");
 
 router.post("/signal/comments", auth, signalCtrl.addNewSignalComment);
 router.get("/signal/comments/:id", auth, signalCtrl.findOneSignalComment);

@@ -1,5 +1,6 @@
 const db = require("../../models/index");
 const Like = db.Like;
+const User = db.User;
 
 exports.addNewLike = (req, res) => {
   Like.create(req.body)
@@ -23,11 +24,17 @@ exports.deleteLike = (req, res) => {
         return res.status(404).json({ message });
       }
       const likeDeleted = like;
-      return Like.destroy({
-        where: { id: like.id },
-      }).then(() => {
-        const message = `le like n° ${likeDeleted.id} au post ${likeDeleted.postId}a bien été supprimé.`;
-        res.json({ message, data: likeDeleted });
+      User.findByPk(req.auth.userId).then((user) => {
+        if (user.admin || likeDeleted.userId === user.id) {
+          return Like.destroy({
+            where: { id: like.id },
+          }).then(() => {
+            const message = `le like n° ${likeDeleted.id} au post ${likeDeleted.postId}a bien été supprimé.`;
+            res.json({ message, data: likeDeleted });
+          });
+        } else {
+          return res.status(401).json({ error: "Requète non autorisée ! " });
+        }
       });
     })
     .catch((error) => {

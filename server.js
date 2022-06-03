@@ -10,9 +10,5 @@ app.get("/", (req, res) => {
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
+  console.log(`Ready on ${process.env.NODE_ENV} mode `);
 });
-
-/*app.set('port', process.env.PORT || 3000);
-const server = http.createServer(app);
-
-server.listen(process.env.PORT || 3000);*/

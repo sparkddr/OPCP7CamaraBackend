@@ -11,11 +11,14 @@ Repo Back End du réseau social interne d'entreprise Groupamania
 Créer un fichier .env à la racine du dossier backend en ajoutant vos informations de connexion pour le token et la base de donnée :
 
 ```bash
-  PORT=8000 // Par défaut utiliser le port 8000 svp
-  PRIVATEKEY= "Votre clé Privée"
-  DB_USERNAME = "root"
-  DB_PASSWORD = "password"
-  DB_DATABASE = "nom_database"
+NODE_ENV=developmment
+PORT=8000
+API_URL=127.0.0.1
+PRIVATEKEY="CUSTOM_PRIVATE_KEY"
+DB_USERNAME="root"
+DB_PASSWORD="CapibaraBaracuda2909"
+DB_DATABASE="groupomania_bis"
+
 ```
 
 Créer la base de donnée (Vous devez au préalable avoir installé MySql sur votre ordinateur) :

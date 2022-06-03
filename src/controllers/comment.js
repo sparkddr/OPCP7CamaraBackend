@@ -1,5 +1,6 @@
 const db = require("../../models/index");
 const Comment = db.Comment;
+const User = db.User;
 const { ValidationError } = require("sequelize");
 
 exports.newComment = (req, res) => {
@@ -58,19 +59,27 @@ exports.findOneComment = (req, res) => {
 };
 
 exports.updateComment = (req, res) => {
-  const id = req.params.id;
-  Comment.update(req.body, {
-    where: { id: id },
-  })
-    .then(() => {
-      return Comment.findByPk(id).then((comment) => {
-        if (comment === null) {
-          const message =
-            "Le comment demandé n'existe pas . Réessayer avec un autre identifiant";
-          return res.status(404).json({ message });
+  Comment.findByPk(req.params.id)
+    .then((comment) => {
+      if (comment === null) {
+        const message =
+          "Le comment n'a pas été retrouvé, merci de réessayer plus tard";
+        return res.status(404).json({ message });
+      }
+      const commentModify = comment;
+      User.findByPk(req.auth.userId).then((user) => {
+        if (user.admin || commentModify.userId === user.id) {
+          return Comment.update(req.body, {
+            where: { id: commentModify.id },
+          }).then(() => {
+            return Comment.findByPk(id).then((comment) => {
+              const message = `le comment n° ${commentModify.id} a bien été modifié.`;
+              res.json({ message, data: comment });
+            });
+          });
+        } else {
+          return res.status(401).json({ error: "Requète non autorisée ! " });
         }
-        const message = "Le comment a bien été modifié";
-        res.json({ message, data: comment });
       });
     })
     .catch((error) => {
@@ -92,11 +101,17 @@ exports.deleteComment = (req, res) => {
         return res.status(404).json({ message });
       }
       const commentDeleted = comment;
-      return Comment.destroy({
-        where: { id: comment.id },
-      }).then(() => {
-        const message = `le comment n° ${commentDeleted.id} a bien été supprimé.`;
-        res.json({ message, data: commentDeleted });
+      User.findByPk(req.auth.userId).then((user) => {
+        if (user.admin || comment.userId === user.id) {
+          return Comment.destroy({
+            where: { id: comment.id },
+          }).then(() => {
+            const message = `le comment n° ${commentDeleted.id} a bien été supprimé.`;
+            res.json({ message, data: commentDeleted });
+          });
+        } else {
+          return res.status(401).json({ error: "Requète non autorisée ! " });
+        }
       });
     })
     .catch((error) => {

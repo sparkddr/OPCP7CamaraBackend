@@ -78,29 +78,37 @@ exports.findOnePost = (req, res) => {
 };
 
 exports.updatePost = (req, res) => {
-  const id = req.params.id;
-  Post.update(req.body, {
-    where: { id: id },
-  })
-    .then(() => {
-      return Post.findByPk(id).then((post) => {
-        if (post === null) {
-          const message =
-            "Le post demandé n'existe pas . Réessayer avec un autre identifiant";
-          return res.status(404).json({ message });
-        }
-        const message = "Le post a bien été modifié";
-        res.json({ message, data: post });
-      });
-    })
-    .catch((error) => {
-      if (error instanceof ValidationError) {
-        return res.status(400).json({ message: error.message, data: error });
-      }
+  Post.findByPk(req.params.id).then((post) => {
+    if (post === null) {
       const message =
-        "Le post n'a pas pu être modifié, Merci de réessayer un peu plus tard";
-      res.status(500).json({ message, data: error });
-    });
+        "Le post n'a pas été retrouvé, merci de réessayer plus tard";
+      return res.status(404).json({ message });
+    }
+    const updatedPost = post;
+    User.findByPk(req.auth.userId)
+      .then((user) => {
+        if (user.admin || post.userId === user.id) {
+          return Post.update({
+            where: { id: updatedPost.id },
+          }).then(() => {
+            const message = `le post n° ${postDeleted.id} a bien été modifié.`;
+            res.json({ message, data: postDeleted });
+          });
+        } else {
+          return res
+            .status(401)
+            .json({ error: new Error("Requète non autorisée ! ") });
+        }
+      })
+      .catch((error) => {
+        if (error instanceof ValidationError) {
+          return res.status(400).json({ message: error.message, data: error });
+        }
+        const message =
+          "Le post n'a pas pu être modifié, Merci de réessayer un peu plus tard";
+        res.status(500).json({ message, data: error });
+      });
+  });
 };
 
 exports.deletePost = (req, res) => {
@@ -121,9 +129,7 @@ exports.deletePost = (req, res) => {
             res.json({ message, data: postDeleted });
           });
         } else {
-          return res
-            .status(401)
-            .json({ error: new Error("Requète non autorisée ! ") });
+          return res.status(401).json({ error: "Requète non autorisée ! " });
         }
       });
     })

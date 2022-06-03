@@ -119,11 +119,17 @@ exports.deleteUser = (req, res) => {
         return res.status(404).json({ message });
       }
       const userDeleted = user;
-      return User.destroy({
-        where: { id: user.id },
-      }).then(() => {
-        const message = `l'utilisateur n° ${userDeleted.id} a bien été supprimé.`;
-        res.json({ message, data: userDeleted });
+      User.findByPk(req.auth.userId).then((userAuth) => {
+        if (userAuth.admin || userDeleted.id === userAuth.id) {
+          return User.destroy({
+            where: { id: userAuth.id },
+          }).then(() => {
+            const message = `le post n° ${postDeleted.id} a bien été supprimé.`;
+            res.json({ message, data: postDeleted });
+          });
+        } else {
+          return res.status(401).json({ error: "Requète non autorisée ! " });
+        }
       });
     })
     .catch((error) => {
