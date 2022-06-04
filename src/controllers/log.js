@@ -26,6 +26,7 @@ exports.login = (req, res) => {
           const token = jwt.sign({ userId: user.id }, privateKey, {
             expiresIn: "24h",
           });
+
           const message = "L'utilisateur a été connecté avec succès";
           return res.json({ message, data: user, token });
         });
@@ -60,9 +61,3 @@ exports.signup = (req, res) => {
       });
   });
 };
-
-/*User.create(req.body)
-    .then((user) => {
-      const message = `L'utilisateur ${req.body.firstname} a bien été créé.`;
-      res.json({ message, data: user });
-    })*/

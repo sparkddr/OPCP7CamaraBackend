@@ -87,12 +87,12 @@ exports.updatePost = (req, res) => {
     const updatedPost = post;
     User.findByPk(req.auth.userId)
       .then((user) => {
-        if (user.admin || post.userId === user.id) {
-          return Post.update({
+        if (user.admin || updatedPost.userId === user.id) {
+          return Post.update(req.body, {
             where: { id: updatedPost.id },
           }).then(() => {
-            const message = `le post n° ${postDeleted.id} a bien été modifié.`;
-            res.json({ message, data: postDeleted });
+            const message = `le post n° ${updatedPost.id} a bien été modifié.`;
+            res.json({ message, data: updatedPost });
           });
         } else {
           return res
